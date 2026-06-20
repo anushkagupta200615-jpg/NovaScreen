@@ -8,18 +8,13 @@ export default function WelcomeModal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Show modal on first load if not dismissed previously
-    const hasSeenModal = localStorage.getItem("novascreen_welcome_seen");
-    if (!hasSeenModal) {
-      // Slight delay for dramatic effect
-      const timer = setTimeout(() => setIsOpen(true), 500);
-      return () => clearTimeout(timer);
-    }
+    // Show modal on every load for the demo
+    const timer = setTimeout(() => setIsOpen(true), 500);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleDismiss = () => {
     setIsOpen(false);
-    localStorage.setItem("novascreen_welcome_seen", "true");
   };
 
   return (
