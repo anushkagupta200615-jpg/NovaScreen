@@ -6,6 +6,7 @@ import MolecularViewer from "@/components/MolecularViewer";
 import PipelineOrchestrator from "@/components/PipelineOrchestrator";
 import ResultsDashboard from "@/components/ResultsDashboard";
 import WelcomeModal from "@/components/WelcomeModal";
+import DiscoveryBrief from "@/components/DiscoveryBrief";
 import { targets } from "@/data/mockDatasets";
 
 export default function Home() {
@@ -169,6 +170,10 @@ export default function Home() {
             </div>
             
             <ResultsDashboard results={results} />
+            
+            {status === "completed" && (
+              <DiscoveryBrief target={activeTarget} results={results} />
+            )}
           </div>
         </div>
       </main>
