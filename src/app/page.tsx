@@ -220,7 +220,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <ResultsDashboard results={results} />
+            <ResultsDashboard results={results} target={activeTarget} />
           </motion.div>
 
           {/* Step 5: Advanced Analytics & Insights */}
