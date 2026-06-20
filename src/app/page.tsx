@@ -57,9 +57,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen relative overflow-hidden bg-zinc-950">
-      {/* Ambient glowing orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-primary/10 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-brand-secondary/10 blur-[120px] pointer-events-none" />
+      {/* Ambient glowing orbs - optimized for scroll performance */}
+      <div className="fixed top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(244,63,94,0.15)_0%,transparent_60%)] pointer-events-none -z-10" />
+      <div className="fixed bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] bg-[radial-gradient(circle,rgba(139,92,246,0.15)_0%,transparent_60%)] pointer-events-none -z-10" />
 
       <WelcomeModal 
         selectedTargetId={selectedTargetId} 
