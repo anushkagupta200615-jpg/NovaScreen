@@ -7,6 +7,7 @@ import MolecularViewer from "@/components/MolecularViewer";
 import PipelineOrchestrator from "@/components/PipelineOrchestrator";
 import ResultsDashboard from "@/components/ResultsDashboard";
 import AnalyticsChart from "@/components/AnalyticsChart";
+import BindingRankings from "@/components/BindingRankings";
 import WelcomeModal from "@/components/WelcomeModal";
 import DiscoveryBrief from "@/components/DiscoveryBrief";
 import ResearchCopilot from "@/components/ResearchCopilot";
@@ -225,9 +226,12 @@ export default function Home() {
 
           {/* Step 5: Advanced Analytics & Insights */}
           {status === "completed" && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <AnalyticsChart results={results} />
-              <DiscoveryBrief target={activeTarget} results={results} />
+            <div className="flex flex-col gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <AnalyticsChart results={results} />
+                <DiscoveryBrief target={activeTarget} results={results} />
+              </div>
+              <BindingRankings results={results} target={activeTarget} />
             </div>
           )}
         </div>

@@ -89,7 +89,13 @@ export const compounds: Compound[] = [
   { id: "cmp-4", name: "Luteolin", smiles: "C1=CC(=C(C=C1C2=CC(=O)C3=C(C=C(C=C3O2)O)O)O)O", molecularWeight: 300.3, logP: 2.6, hbd: 4, hba: 6 },
   { id: "cmp-5", name: "Sotorasib", smiles: "CC1=C(C(=O)N(C1=O)C2=C(C=CC=C2F)C3=C(C=C(C=N3)Cl)O)C4=CC=C(C=C4)C#N", molecularWeight: 560.0, logP: 3.5, hbd: 1, hba: 7 },
   { id: "cmp-6", name: "WZ4002", smiles: "CN1CCN(CC1)C2=CC=C(C=C2)NC3=NC=C(C(=N3)NC4=CC=CC(=C4)C#N)C(F)(F)F", molecularWeight: 467.5, logP: 4.2, hbd: 2, hba: 6 },
-  { id: "cmp-7", name: "Saquinavir", smiles: "CC(C)(C)NC(=O)C1CC2CCCCC2C(C1)N3CC(CC3C(=O)NC(CC4=CC=CC=C4)C(O)CC5=CC=CC=C5)O", molecularWeight: 670.8, logP: 4.5, hbd: 4, hba: 6 }
+  { id: "cmp-7", name: "Saquinavir", smiles: "CC(C)(C)NC(=O)C1CC2CCCCC2C(C1)N3CC(CC3C(=O)NC(CC4=CC=CC=C4)C(O)CC5=CC=CC=C5)O", molecularWeight: 670.8, logP: 4.5, hbd: 4, hba: 6 },
+  { id: "cmp-8", name: "Carmofur", smiles: "O=C(NC1CCCC1)N2C(=O)NC(=C(F)C2=O)C", molecularWeight: 257.3, logP: 1.5, hbd: 2, hba: 4 },
+  { id: "cmp-9", name: "GC-376", smiles: "CC(C)CC(NC(=O)OCC1=CC=CC=C1)C(=O)NC(CC2CCNC2=O)C=O", molecularWeight: 403.5, logP: 1.9, hbd: 3, hba: 6 },
+  { id: "cmp-10", name: "Baicalein", smiles: "O=C1C=C(OC2=CC(O)=C(O)C(O)=C12)C3=CC=CC=C3", molecularWeight: 270.2, logP: 2.8, hbd: 3, hba: 5 },
+  { id: "cmp-11", name: "TDZD-8", smiles: "CC1=NN(C(=O)S1)CC2=CC=CC=C2", molecularWeight: 206.3, logP: 1.8, hbd: 0, hba: 3 },
+  { id: "cmp-12", name: "Ebselen", smiles: "O=C1N(C2=CC=CC=C2)Se3c1cccc3", molecularWeight: 274.2, logP: 2.9, hbd: 0, hba: 2 },
+  { id: "cmp-13", name: "Leupeptin", smiles: "CC(C)CC(NC(=O)C(CC(C)C)NC(=O)C(C)N)C(=O)NCCCCN=C(N)N", molecularWeight: 426.6, logP: 0.5, hbd: 6, hba: 5 }
 ];
 
 export interface ScreeningResult {
@@ -101,6 +107,8 @@ export interface ScreeningResult {
   painsAlert: string | null;
   structuralAnalysis?: string;
   isTopHit?: boolean;
+  isReferenceDrug?: boolean;
+  experimentalKi?: string;
   referenceDrug?: {
     name: string;
     affinityScore: number;
@@ -116,12 +124,19 @@ export const screeningResults: ScreeningResult[] = [
     violations: 0,
     painsAlert: "PAINS alert (quinone_A(370)): chemical pattern known to cause false positives in lab assays.",
     isTopHit: true,
+    experimentalKi: "1290 nM",
     referenceDrug: { name: "Nirmatrelvir (Paxlovid)", affinityScore: -6.71 },
     structuralAnalysis: "The top candidate, Shikonin, exhibits a stronger binding affinity to the SARS-CoV-2 main protease (6LU7) with a binding energy of -6.79 kcal/mol, compared to Nirmatrelvir (Paxlovid), which has a binding energy of -6.71 kcal/mol, showing a mere -0.08 kcal/mol difference. This enhanced binding is largely attributed to its precise fit into the active site cleft of the protease. Specifically, Shikonin forms multiple hydrogen bonds and hydrophobic interactions with key residues such as His41, Cys145, and Glu166. The aromatic ring of Shikonin aligns well with the hydrophobic pocket defined by these residues, allowing for strong van der Waals interactions and additional hydrogen bonding opportunities. Additionally, the hydroxyl group of Shikonin interacts favorably with the polar environment around His164, further stabilizing the complex. These interactions collectively contribute to the superior binding affinity of Shikonin over Nirmatrelvir, making it a promising lead compound in the drug discovery process. The detailed interaction map reveals that Shikonin's ability to engage multiple binding sites simultaneously provides a robust and stable interaction profile. For instance, the aromatic ring of Shikonin stacks against the hydrophobic patch formed by P1' and P2' residues (Cys145 and Glu166), while the hydroxyl group forms a hydrogen bond with the carbonyl oxygen of Glu166. This multi-point engagement not only increases the overall binding energy but also enhances the specificity of Shikonin for the SARS-CoV-2 main protease, reducing the likelihood of off-target effects. Thus, the structural analysis underscores the importance of these specific interactions in achieving the observed binding affinity, highlighting Shikonin as a potent inhibitor with significant therapeutic potential."
   },
-  { targetId: "target-1", compoundId: "cmp-1", affinityScore: -6.71, toxicityRisk: "Low", violations: 0, painsAlert: null },
+  { targetId: "target-1", compoundId: "cmp-1", affinityScore: -6.71, toxicityRisk: "Low", violations: 0, painsAlert: null, isReferenceDrug: true },
   { targetId: "target-1", compoundId: "cmp-3", affinityScore: -6.66, toxicityRisk: "Low", violations: 0, painsAlert: null },
-  { targetId: "target-1", compoundId: "cmp-4", affinityScore: -6.55, toxicityRisk: "Medium", violations: 0, painsAlert: "PAINS alert (catechol_A(92))" },
+  { targetId: "target-1", compoundId: "cmp-4", affinityScore: -6.55, toxicityRisk: "Medium", violations: 1, painsAlert: "PAINS alert (catechol_A(92))" },
+  { targetId: "target-1", compoundId: "cmp-8", affinityScore: -6.44, toxicityRisk: "Low", violations: 0, painsAlert: null },
+  { targetId: "target-1", compoundId: "cmp-9", affinityScore: -6.08, toxicityRisk: "Low", violations: 0, painsAlert: null },
+  { targetId: "target-1", compoundId: "cmp-10", affinityScore: -5.93, toxicityRisk: "Medium", violations: 1, painsAlert: "PAINS alert (catechol_A(92))" },
+  { targetId: "target-1", compoundId: "cmp-11", affinityScore: -5.78, toxicityRisk: "Low", violations: 0, painsAlert: null },
+  { targetId: "target-1", compoundId: "cmp-12", affinityScore: -5.59, toxicityRisk: "Low", violations: 0, painsAlert: null },
+  { targetId: "target-1", compoundId: "cmp-13", affinityScore: -5.38, toxicityRisk: "Low", violations: 0, painsAlert: null },
 
   { 
     targetId: "target-2", 
