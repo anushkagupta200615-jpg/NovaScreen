@@ -4,6 +4,9 @@
   <p align="center">
     <strong>A next-generation, AI-driven drug discovery and molecular simulation platform.</strong>
   </p>
+  <p align="center">
+    <a href="https://nova-screen.vercel.app"><strong>🔴 Live Demo: nova-screen.vercel.app</strong></a>
+  </p>
 </div>
 
 ---
