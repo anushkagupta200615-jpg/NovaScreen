@@ -17,9 +17,31 @@ interface AnalyticsChartProps {
   results: any[];
 }
 
-export default function AnalyticsChart({ results }: AnalyticsChartProps) {
-  if (!results || results.length === 0) return null;
+const getColor = (toxicity: string) => {
+  switch(toxicity) {
+    case "Low": return "#34d399"; // emerald-400
+    case "Medium": return "#fbbf24"; // amber-400
+    case "High": return "#f87171"; // red-400
+    default: return "#a1a1aa";
+  }
+};
 
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div className="bg-zinc-900 border border-zinc-700 p-3 rounded-lg shadow-xl text-sm">
+        <p className="font-bold text-zinc-100 mb-1">{data.name}</p>
+        <p className="text-zinc-300">Affinity: <span className="text-brand-primary">{data.affinity} kcal/mol</span></p>
+        <p className="text-zinc-300">Mol. Weight: {data.mw} g/mol</p>
+        <p className="text-zinc-300">Toxicity Risk: <span style={{ color: getColor(data.toxicity) }}>{data.toxicity}</span></p>
+      </div>
+    );
+  }
+  return null;
+};
+
+export default function AnalyticsChart({ results }: AnalyticsChartProps) {
   // Prepare data for the scatter plot
   // X-axis: Molecular Weight
   // Y-axis: Binding Affinity
@@ -27,6 +49,7 @@ export default function AnalyticsChart({ results }: AnalyticsChartProps) {
   // Color: Red/Yellow/Green based on Toxicity Risk
 
   const data = useMemo(() => {
+    if (!results) return [];
     return results.map(r => ({
       name: r.compound.name,
       affinity: r.affinityScore,
@@ -36,29 +59,7 @@ export default function AnalyticsChart({ results }: AnalyticsChartProps) {
     }));
   }, [results]);
 
-  const getColor = (toxicity: string) => {
-    switch(toxicity) {
-      case "Low": return "#34d399"; // emerald-400
-      case "Medium": return "#fbbf24"; // amber-400
-      case "High": return "#f87171"; // red-400
-      default: return "#a1a1aa";
-    }
-  };
-
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      return (
-        <div className="bg-zinc-900 border border-zinc-700 p-3 rounded-lg shadow-xl text-sm">
-          <p className="font-bold text-zinc-100 mb-1">{data.name}</p>
-          <p className="text-zinc-300">Affinity: <span className="text-brand-primary">{data.affinity} kcal/mol</span></p>
-          <p className="text-zinc-300">Mol. Weight: {data.mw} g/mol</p>
-          <p className="text-zinc-300">Toxicity Risk: <span style={{ color: getColor(data.toxicity) }}>{data.toxicity}</span></p>
-        </div>
-      );
-    }
-    return null;
-  };
+  if (!results || results.length === 0) return null;
 
   return (
     <div className="glass-panel p-6 mt-6">

@@ -8,39 +8,27 @@ export interface Target {
 export const targets: Target[] = [
   {
     id: "target-1",
-    name: "SARS-CoV-2 Main Protease",
-    description: "Key enzyme for viral replication, a prime target for COVID-19 antiviral drugs.",
+    name: "COVID-19 Main Protease",
+    description: "Key enzyme for viral replication. Reference drug: Nirmatrelvir.",
     pdbId: "6LU7"
   },
   {
     id: "target-2",
-    name: "EGFR Kinase Domain",
-    description: "Epidermal growth factor receptor, mutations are associated with lung cancer.",
-    pdbId: "1M17"
+    name: "KRAS G12C Lung Cancer",
+    description: "Mutated GTPase protein driving cancer cell growth. Reference drug: Sotorasib.",
+    pdbId: "6OIM"
   },
   {
     id: "target-3",
-    name: "BACE1",
-    description: "Beta-secretase 1, an enzyme involved in the production of amyloid beta in Alzheimer's disease.",
-    pdbId: "1FKN"
+    name: "EGFR Kinase Lung Cancer",
+    description: "Epidermal growth factor receptor associated with non-small cell lung cancer. Reference drug: Erlotinib.",
+    pdbId: "1M17"
   },
   {
     id: "target-4",
-    name: "Hemoglobin",
-    description: "Oxygen-transport metalloprotein in red blood cells.",
-    pdbId: "4HHB"
-  },
-  {
-    id: "target-5",
     name: "HIV-1 Protease",
-    description: "Retroviral aspartyl protease essential for the life-cycle of HIV.",
-    pdbId: "3CL0"
-  },
-  {
-    id: "target-6",
-    name: "Spike Glycoprotein",
-    description: "Mediates entry of SARS-CoV-2 into host cells.",
-    pdbId: "7BZ5"
+    description: "Retroviral aspartyl protease essential for the life-cycle of HIV. Reference drug: Saquinavir.",
+    pdbId: "1HIV"
   }
 ];
 

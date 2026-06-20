@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Play, Activity, Server, Zap, Database } from "lucide-react";
+import { Play, Activity, Server, Zap, Database, Library } from "lucide-react";
 import { motion } from "framer-motion";
 import MolecularViewer from "@/components/MolecularViewer";
 import PipelineOrchestrator from "@/components/PipelineOrchestrator";
@@ -9,6 +9,7 @@ import ResultsDashboard from "@/components/ResultsDashboard";
 import AnalyticsChart from "@/components/AnalyticsChart";
 import WelcomeModal from "@/components/WelcomeModal";
 import DiscoveryBrief from "@/components/DiscoveryBrief";
+import ResearchCopilot from "@/components/ResearchCopilot";
 import { targets } from "@/data/mockDatasets";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
   const [status, setStatus] = useState<"idle" | "running" | "completed">("idle");
   const [results, setResults] = useState<any>(null);
   const [activeTarget, setActiveTarget] = useState<any>(targets[0]);
+  const [isCopilotOpen, setIsCopilotOpen] = useState(false);
 
   const handleRunScreening = async () => {
     if (selectedTargetId === "custom" && !customPdbId.trim()) return;
@@ -63,6 +65,13 @@ export default function Home() {
         onSelectTarget={setSelectedTargetId} 
         onRun={handleRunScreening}
       />
+
+      <ResearchCopilot
+        isOpen={isCopilotOpen}
+        onClose={() => setIsCopilotOpen(false)}
+        targetId={selectedTargetId}
+        customPdbId={customPdbId}
+      />
       
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-xl">
@@ -78,6 +87,13 @@ export default function Home() {
           </div>
           
           <div className="flex items-center gap-4">
+            <button
+              onClick={() => setIsCopilotOpen(true)}
+              className="flex items-center gap-2 rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-3 py-1.5 text-[11px] font-bold text-indigo-400 hover:bg-indigo-500/20 transition-colors shadow-sm shadow-indigo-500/10"
+            >
+              <Library className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Research Copilot</span>
+            </button>
             <div className="hidden sm:flex items-center gap-2">
               <span className="rounded-md border border-zinc-700 bg-zinc-800/50 px-2.5 py-1 text-[10px] font-medium text-zinc-300">Next.js 15</span>
               <span className="rounded-md border border-zinc-700 bg-zinc-800/50 px-2.5 py-1 text-[10px] font-medium text-zinc-300">React 19</span>

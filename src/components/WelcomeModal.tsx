@@ -115,7 +115,7 @@ export default function WelcomeModal({ selectedTargetId, onSelectTarget, onRun }
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3">
                         <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center shrink-0 mt-0.5"><span className="text-[10px] text-zinc-400">1</span></div>
-                        <span className="text-zinc-400">Parsing the target's 3D structural <span className="text-zinc-200">PDB file</span>.</span>
+                        <span className="text-zinc-400">Parsing the target&apos;s 3D structural <span className="text-zinc-200">PDB file</span>.</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center shrink-0 mt-0.5"><span className="text-[10px] text-zinc-400">2</span></div>
@@ -123,7 +123,7 @@ export default function WelcomeModal({ selectedTargetId, onSelectTarget, onRun }
                       </li>
                       <li className="flex items-start gap-3">
                         <div className="w-5 h-5 rounded-full bg-zinc-800 flex items-center justify-center shrink-0 mt-0.5"><span className="text-[10px] text-zinc-400">3</span></div>
-                        <span className="text-zinc-400">Filtering candidates against <span className="text-zinc-200">Lipinski's Rule of Five</span> for safety.</span>
+                        <span className="text-zinc-400">Filtering candidates against <span className="text-zinc-200">Lipinski&apos;s Rule of Five</span> for safety.</span>
                       </li>
                     </ul>
                   </div>

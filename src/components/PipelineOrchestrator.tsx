@@ -27,6 +27,7 @@ export default function PipelineOrchestrator({ status }: PipelineOrchestratorPro
 
   useEffect(() => {
     if (status === "idle") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveStep(-1);
     } else if (status === "running") {
       setActiveStep(0);

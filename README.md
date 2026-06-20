@@ -30,47 +30,40 @@ Built to be exceptionally fast and perfectly suited for serverless deployment on
 
 ## 🏗️ Architecture
 
-NovaScreen employs a unified frontend and backend utilizing the **Next.js 15 App Router**. 
-
-```mermaid
-graph TD;
-    subgraph Frontend [Presentation Layer - Next.js App Router]
-        UI[Main Dashboard UI]
-        MV[Molecular Viewer - 3dmol.js]
-        PO[Pipeline Orchestrator - Framer Motion]
-        RD[Results Dashboard]
-    end
-
-    subgraph Backend [Data & Logic Layer - Next.js API]
-        API[API Route: /api/screen]
-        DB[(Mock Database: mockDatasets.ts)]
-    end
-
-    UI -->|1. Select Target| PO
-    PO -->|2. Trigger Run| API
-    UI -->|Renders 3D| MV
-    API -->|3. Fetch Data| DB
-    DB -.->|4. Return Data| API
-    API -.->|5. JSON Response| UI
-    UI -->|6. Update Table| RD
-
-    style Frontend fill:#0f172a,stroke:#4facfe,stroke-width:2px,color:#f8fafc
-    style Backend fill:#020617,stroke:#00f2fe,stroke-width:2px,color:#f8fafc
-    style DB fill:#1e293b,stroke:#00f2fe,stroke-width:1px,color:#f8fafc
+```
+Next.js Frontend (3Dmol.js protein viewer)
+        |
+FastAPI Backend (port 8080)
+        |
+LangGraph Pipeline (5 sequential agents)
+  |-- Target Identifier (Qwen 2.5-7B via vLLM)
+  |-- Molecular Dynamics (AutoDock Vina + OpenMM on MI300X)
+  |-- Binding Scorer (Qwen 2.5-7B via vLLM)
+  |-- Toxicity Screener (RDKit)
+  |-- Discovery Reporter (Qwen 2.5-7B via vLLM)
 ```
 
-### 1. The Presentation Layer (Frontend)
-- **Framework**: React 19 / Next.js 15
-- **Styling**: Tailwind CSS v4 + Custom Glassmorphism CSS variables
-- **Animation**: `framer-motion` for complex state transitions
-- **Components**:
-  - `MolecularViewer`: Client-side rendered 3D canvas (WebGL).
-  - `PipelineOrchestrator`: Reactive state machine visualizing the AI screening process.
-  - `ResultsDashboard`: Data presentation layer for binding affinities and Lipinski's checks.
+---
 
-### 2. The Data & Logic Layer (Backend/API)
-- **API Routes**: Located at `/api/screen/route.ts`. Handles incoming screening requests, introduces artificial computational delays (to simulate heavy ML workloads), and returns sorted results.
-- **Mock Database**: `mockDatasets.ts` serves as our offline, serverless-friendly database containing compound strings (SMILES), target descriptions, and pre-calculated affinity scores.
+## 🛠️ Technology Stack
+
+| Layer | Technology |
+|-------|-----------|
+| GPU | AMD Instinct MI300X (192GB HBM3) via AMD Developer Cloud |
+| Molecular Docking | AutoDock Vina 1.2.x, Meeko, Open Babel |
+| Physics Simulation | OpenMM 8.x, AMBER14 force field, OpenCL backend |
+| Protein Prep | pdb2pqr, propka |
+
+---
+
+## 🎯 Disease Targets
+
+| Target | PDB | Compounds | Reference Drug | Top Hit (Vina) |
+|--------|-----|-----------|---------------|----------------|
+| COVID-19 Main Protease | 6LU7 | 20 | Nirmatrelvir (Paxlovid) | Shikonin (-6.79 kcal/mol) |
+| KRAS G12C Lung Cancer | 6OIM | 15 | Sotorasib (Lumakras) | SML-8-73-1 (-8.59 kcal/mol) |
+| EGFR Kinase Lung Cancer | 1M17 | 12 | Erlotinib (Tarceva) | WZ4002 (-8.82 kcal/mol) |
+| HIV-1 Protease | 1HIV | 10 | Saquinavir | Saquinavir (-6.26 kcal/mol) |
 
 ---
 
