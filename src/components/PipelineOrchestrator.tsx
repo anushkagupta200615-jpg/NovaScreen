@@ -49,12 +49,14 @@ export default function PipelineOrchestrator({ status }: PipelineOrchestratorPro
   }, [status]);
 
   return (
-    <div className="glass-panel p-6 w-full flex flex-col space-y-6">
-      <h3 className="text-xl font-semibold text-zinc-200 mb-2">AI Screening Pipeline</h3>
+    <div className="glass-panel p-6 w-full flex flex-col space-y-8">
+      <h3 className="text-xl font-semibold text-zinc-200 mb-2 text-center md:text-left">AI Screening Pipeline</h3>
       
-      <div className="relative flex flex-col space-y-4">
-        {/* Connecting line */}
-        <div className="absolute left-[15px] top-4 bottom-4 w-0.5 bg-zinc-800 -z-10" />
+      <div className="relative flex flex-col md:flex-row md:items-start justify-between space-y-8 md:space-y-0 w-full px-2 md:px-8">
+        {/* Connecting horizontal line for desktop */}
+        <div className="hidden md:block absolute left-12 right-12 top-4 h-0.5 bg-zinc-800 -z-10" />
+        {/* Connecting vertical line for mobile */}
+        <div className="md:hidden absolute left-[23px] top-4 bottom-4 w-0.5 bg-zinc-800 -z-10" />
         
         {STEPS.map((step, index) => {
           const isActive = index === activeStep && status === "running";
@@ -62,8 +64,8 @@ export default function PipelineOrchestrator({ status }: PipelineOrchestratorPro
           const isPending = index > activeStep && status !== "completed";
 
           return (
-            <div key={step} className="flex items-center space-x-4">
-              <div className="relative">
+            <div key={step} className="flex flex-row md:flex-col items-center md:justify-start gap-4 md:gap-3 z-10 w-full md:w-[120px]">
+              <div className="relative flex-shrink-0">
                 {isPast ? (
                   <motion.div
                     initial={{ scale: 0 }}
@@ -88,8 +90,8 @@ export default function PipelineOrchestrator({ status }: PipelineOrchestratorPro
               </div>
               
               <div className={cn(
-                "transition-colors duration-300",
-                isPast ? "text-zinc-200" : isActive ? "text-brand-primary font-medium" : "text-zinc-500"
+                "transition-colors duration-300 text-sm md:text-[11px] md:text-center md:leading-tight uppercase tracking-wide",
+                isPast ? "text-zinc-200" : isActive ? "text-brand-primary font-bold" : "text-zinc-500"
               )}>
                 {step}
               </div>

@@ -105,100 +105,111 @@ export default function Home() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-          {/* Left Column - Orchestrator & Controls */}
+        <div className="flex flex-col space-y-8 max-w-5xl mx-auto w-full">
+          {/* Step 1: Configuration */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-2 space-y-6 flex flex-col"
+            className="glass-panel p-6"
           >
-            <div className="glass-panel p-6">
-              <label className="block text-sm font-semibold text-zinc-200 mb-1">Target Protein</label>
-              <p className="text-xs text-zinc-400 mb-4">Select from curated database or provide custom PDB</p>
-              
-              <select 
-                value={selectedTargetId}
-                onChange={(e) => setSelectedTargetId(e.target.value)}
-                disabled={status === "running"}
-                className="w-full rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-200 transition-colors focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary disabled:opacity-50 mb-3"
-              >
-                {targets.map((t) => (
-                  <option key={t.id} value={t.id}>🧬 {t.name} ({t.pdbId})</option>
-                ))}
-                <option value="custom">🔍 -- Custom Target (PDB ID) --</option>
-              </select>
-              
-              {selectedTargetId === "custom" && (
-                <div className="mb-4">
-                  <input 
-                    type="text"
-                    placeholder="e.g. 1CRN"
-                    value={customPdbId}
-                    onChange={(e) => setCustomPdbId(e.target.value)}
-                    disabled={status === "running"}
-                    maxLength={4}
-                    className="w-full rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-200 uppercase transition-colors focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary disabled:opacity-50"
-                  />
-                  <p className="text-[10px] text-zinc-500 mt-1 ml-1">Must be a valid 4-character RCSB PDB ID.</p>
-                </div>
-              )}
-
-              {/* Contextual Stats Pills */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className="flex items-center gap-2 rounded-lg bg-zinc-800/40 border border-zinc-700/50 px-3 py-1.5">
-                  <Database className="w-3 h-3 text-brand-primary" />
-                  <span className="text-xs text-zinc-300">10+ Compounds</span>
-                </div>
-                <div className="flex items-center gap-2 rounded-lg bg-zinc-800/40 border border-zinc-700/50 px-3 py-1.5">
-                  <Server className="w-3 h-3 text-brand-secondary" />
-                  <span className="text-xs text-zinc-300">Vercel Edge</span>
-                </div>
-              </div>
-
-              <button
-                onClick={handleRunScreening}
-                disabled={status === "running" || (selectedTargetId === "custom" && customPdbId.trim().length < 4)}
-                className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-brand-primary to-brand-secondary px-6 py-3.5 font-semibold text-zinc-950 shadow-md shadow-brand-primary/20 transition-all hover:opacity-90 hover:shadow-lg hover:shadow-brand-primary/30 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 flex justify-center items-center"
-              >
-                {status === "running" ? (
-                  <Zap className="w-4 h-4 mr-2 animate-pulse" />
-                ) : (
-                  <Play className="w-4 h-4 mr-2" />
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="flex-1">
+                <label className="block text-sm font-semibold text-zinc-200 mb-1">Target Protein</label>
+                <p className="text-xs text-zinc-400 mb-4">Select from curated database or provide custom PDB</p>
+                
+                <select 
+                  value={selectedTargetId}
+                  onChange={(e) => setSelectedTargetId(e.target.value)}
+                  disabled={status === "running"}
+                  className="w-full rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-200 transition-colors focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary disabled:opacity-50 mb-3 md:mb-0"
+                >
+                  {targets.map((t) => (
+                    <option key={t.id} value={t.id}>🧬 {t.name} ({t.pdbId})</option>
+                  ))}
+                  <option value="custom">🔍 -- Custom Target (PDB ID) --</option>
+                </select>
+                
+                {selectedTargetId === "custom" && (
+                  <div className="mt-3">
+                    <input 
+                      type="text"
+                      placeholder="e.g. 1CRN"
+                      value={customPdbId}
+                      onChange={(e) => setCustomPdbId(e.target.value)}
+                      disabled={status === "running"}
+                      maxLength={4}
+                      className="w-full rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-200 uppercase transition-colors focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary disabled:opacity-50"
+                    />
+                    <p className="text-[10px] text-zinc-500 mt-1 ml-1">Must be a valid 4-character RCSB PDB ID.</p>
+                  </div>
                 )}
-                {status === "running" ? "Running Pipeline..." : "Run Discovery Pipeline"}
-              </button>
-            </div>
-
-            <PipelineOrchestrator status={status} />
-          </motion.div>
-
-          {/* Right Column - 3D Viewer & Results */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="lg:col-span-3 space-y-6 flex flex-col"
-          >
-            <div className="glass-panel p-1 border border-zinc-700 overflow-hidden relative">
-              <div className="absolute top-4 left-4 z-10 bg-zinc-950/80 backdrop-blur-md border border-zinc-700 rounded-lg px-3 py-2 pointer-events-none">
-                <h3 className="text-sm font-semibold text-zinc-100">
-                  {status === "completed" ? activeTarget?.name : (selectedTargetId === "custom" ? `Custom Target (${customPdbId.toUpperCase() || "..."})` : targets.find(t => t.id === selectedTargetId)?.name)}
-                </h3>
-                <p className="text-[10px] text-zinc-400 mt-0.5">Interactive 3D Structure</p>
               </div>
-              <MolecularViewer pdbId={displayTargetId || null} />
-            </div>
-            
-            <ResultsDashboard results={results} />
 
-            {status === "completed" && (
-              <>
-                <AnalyticsChart results={results} />
-                <DiscoveryBrief target={activeTarget} results={results} />
-              </>
-            )}
+              <div className="flex flex-col gap-4 min-w-[240px]">
+                {/* Contextual Stats Pills */}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 rounded-lg bg-zinc-800/40 border border-zinc-700/50 px-3 py-1.5 flex-1 justify-center">
+                    <Database className="w-3 h-3 text-brand-primary" />
+                    <span className="text-xs text-zinc-300">10+ Compounds</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-lg bg-zinc-800/40 border border-zinc-700/50 px-3 py-1.5 flex-1 justify-center">
+                    <Server className="w-3 h-3 text-brand-secondary" />
+                    <span className="text-xs text-zinc-300">Vercel Edge</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleRunScreening}
+                  disabled={status === "running" || (selectedTargetId === "custom" && customPdbId.trim().length < 4)}
+                  className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-brand-primary to-brand-secondary px-6 py-3.5 font-semibold text-zinc-950 shadow-md shadow-brand-primary/20 transition-all hover:opacity-90 hover:shadow-lg hover:shadow-brand-primary/30 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 flex justify-center items-center"
+                >
+                  {status === "running" ? (
+                    <Zap className="w-4 h-4 mr-2 animate-pulse" />
+                  ) : (
+                    <Play className="w-4 h-4 mr-2" />
+                  )}
+                  {status === "running" ? "Running Pipeline..." : "Run Discovery Pipeline"}
+                </button>
+              </div>
+            </div>
           </motion.div>
+
+          {/* Step 2: 3D Visualization */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="glass-panel p-1 border border-zinc-700 overflow-hidden relative"
+          >
+            <div className="absolute top-4 left-4 z-10 bg-zinc-950/80 backdrop-blur-md border border-zinc-700 rounded-lg px-3 py-2 pointer-events-none">
+              <h3 className="text-sm font-semibold text-zinc-100">
+                {status === "completed" ? activeTarget?.name : (selectedTargetId === "custom" ? `Custom Target (${customPdbId.toUpperCase() || "..."})` : targets.find(t => t.id === selectedTargetId)?.name)}
+              </h3>
+              <p className="text-[10px] text-zinc-400 mt-0.5">Interactive 3D Structure</p>
+            </div>
+            <MolecularViewer pdbId={displayTargetId || null} />
+          </motion.div>
+
+          {/* Step 3: Pipeline Status */}
+          <PipelineOrchestrator status={status} />
+
+          {/* Step 4: Results Data */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <ResultsDashboard results={results} />
+          </motion.div>
+
+          {/* Step 5: Advanced Analytics & Insights */}
+          {status === "completed" && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <AnalyticsChart results={results} />
+              <DiscoveryBrief target={activeTarget} results={results} />
+            </div>
+          )}
         </div>
       </main>
 
