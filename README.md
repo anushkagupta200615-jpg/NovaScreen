@@ -99,7 +99,7 @@ graph TD;
    ```
 
 4. **Open your browser:**
-   Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
+   Navigate to the local development server URL provided in your terminal, or visit the live deployment at [https://nova-screen.vercel.app](https://nova-screen.vercel.app).
 
 ---
 
