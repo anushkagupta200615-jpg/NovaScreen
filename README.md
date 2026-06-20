@@ -29,6 +29,33 @@ Built to be exceptionally fast and perfectly suited for serverless deployment on
 
 NovaScreen employs a unified frontend and backend utilizing the **Next.js 15 App Router**. 
 
+```mermaid
+graph TD;
+    subgraph Frontend [Presentation Layer - Next.js App Router]
+        UI[Main Dashboard UI]
+        MV[Molecular Viewer - 3dmol.js]
+        PO[Pipeline Orchestrator - Framer Motion]
+        RD[Results Dashboard]
+    end
+
+    subgraph Backend [Data & Logic Layer - Next.js API]
+        API[API Route: /api/screen]
+        DB[(Mock Database: mockDatasets.ts)]
+    end
+
+    UI -->|1. Select Target| PO
+    PO -->|2. Trigger Run| API
+    UI -->|Renders 3D| MV
+    API -->|3. Fetch Data| DB
+    DB -.->|4. Return Data| API
+    API -.->|5. JSON Response| UI
+    UI -->|6. Update Table| RD
+
+    style Frontend fill:#0f172a,stroke:#4facfe,stroke-width:2px,color:#f8fafc
+    style Backend fill:#020617,stroke:#00f2fe,stroke-width:2px,color:#f8fafc
+    style DB fill:#1e293b,stroke:#00f2fe,stroke-width:1px,color:#f8fafc
+```
+
 ### 1. The Presentation Layer (Frontend)
 - **Framework**: React 19 / Next.js 15
 - **Styling**: Tailwind CSS v4 + Custom Glassmorphism CSS variables
