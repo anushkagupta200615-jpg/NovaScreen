@@ -57,21 +57,6 @@ graph TD;
     style DB fill:#1e293b,stroke:#00f2fe,stroke-width:1px,color:#f8fafc
 ```
 
-### CatalystMD Backend Pipeline:
-
-```
-Next.js Frontend (3Dmol.js protein viewer)
-        |
-FastAPI Backend (port 8080)
-        |
-LangGraph Pipeline (5 sequential agents)
-  |-- Target Identifier (Qwen 2.5-7B via vLLM)
-  |-- Molecular Dynamics (AutoDock Vina + OpenMM on MI300X)
-  |-- Binding Scorer (Qwen 2.5-7B via vLLM)
-  |-- Toxicity Screener (RDKit)
-  |-- Discovery Reporter (Qwen 2.5-7B via vLLM)
-```
-
 ---
 
 ## 🛠️ Technology Stack
