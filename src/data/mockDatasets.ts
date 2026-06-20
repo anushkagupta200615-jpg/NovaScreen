@@ -23,6 +23,24 @@ export const targets: Target[] = [
     name: "BACE1",
     description: "Beta-secretase 1, an enzyme involved in the production of amyloid beta in Alzheimer's disease.",
     pdbId: "1FKN"
+  },
+  {
+    id: "target-4",
+    name: "Hemoglobin",
+    description: "Oxygen-transport metalloprotein in red blood cells.",
+    pdbId: "4HHB"
+  },
+  {
+    id: "target-5",
+    name: "HIV-1 Protease",
+    description: "Retroviral aspartyl protease essential for the life-cycle of HIV.",
+    pdbId: "3CL0"
+  },
+  {
+    id: "target-6",
+    name: "Spike Glycoprotein",
+    description: "Mediates entry of SARS-CoV-2 into host cells.",
+    pdbId: "7BZ5"
   }
 ];
 

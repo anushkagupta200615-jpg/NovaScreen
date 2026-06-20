@@ -9,12 +9,14 @@ import { targets } from "@/data/mockDatasets";
 
 export default function Home() {
   const [selectedTargetId, setSelectedTargetId] = useState<string>(targets[0].id);
+  const [customPdbId, setCustomPdbId] = useState<string>("");
   const [status, setStatus] = useState<"idle" | "running" | "completed">("idle");
   const [results, setResults] = useState<any>(null);
-
-  const selectedTarget = targets.find((t) => t.id === selectedTargetId);
+  const [activeTarget, setActiveTarget] = useState<any>(targets[0]);
 
   const handleRunScreening = async () => {
+    if (selectedTargetId === "custom" && !customPdbId.trim()) return;
+
     setStatus("running");
     setResults(null);
     
@@ -22,12 +24,16 @@ export default function Home() {
       const response = await fetch("/api/screen", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ targetId: selectedTargetId }),
+        body: JSON.stringify({ 
+          targetId: selectedTargetId,
+          customPdbId: selectedTargetId === "custom" ? customPdbId.trim().toLowerCase() : undefined
+        }),
       });
       
       const data = await response.json();
       
       if (data.status === "completed") {
+        setActiveTarget(data.target);
         setResults(data.results);
         setStatus("completed");
       } else {
@@ -38,6 +44,10 @@ export default function Home() {
       setStatus("idle");
     }
   };
+
+  // Determine what to show in the 3D viewer right now
+  const displayTargetId = status === "completed" ? activeTarget?.pdbId : 
+    (selectedTargetId === "custom" ? customPdbId.trim().toLowerCase() : targets.find(t => t.id === selectedTargetId)?.pdbId);
 
   return (
     <div className="min-h-screen p-8 md:p-12 lg:p-16 max-w-7xl mx-auto space-y-8">
@@ -53,7 +63,7 @@ export default function Home() {
           </p>
         </div>
         
-        <div className="glass-panel p-2 flex items-center space-x-4">
+        <div className="glass-panel p-2 flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
           <select 
             value={selectedTargetId}
             onChange={(e) => setSelectedTargetId(e.target.value)}
@@ -63,11 +73,24 @@ export default function Home() {
             {targets.map((t) => (
               <option key={t.id} value={t.id}>{t.name}</option>
             ))}
+            <option value="custom">-- Custom Target (PDB ID) --</option>
           </select>
+          
+          {selectedTargetId === "custom" && (
+            <input 
+              type="text"
+              placeholder="e.g. 1CRN"
+              value={customPdbId}
+              onChange={(e) => setCustomPdbId(e.target.value)}
+              disabled={status === "running"}
+              className="bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-lg focus:ring-brand-teal focus:border-brand-teal block w-32 p-2.5 outline-none disabled:opacity-50 uppercase"
+            />
+          )}
+
           <button
             onClick={handleRunScreening}
-            disabled={status === "running"}
-            className="flex items-center px-4 py-2 bg-gradient-to-r from-brand-teal to-brand-indigo text-slate-950 font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+            disabled={status === "running" || (selectedTargetId === "custom" && !customPdbId.trim())}
+            className="flex items-center px-4 py-2.5 bg-gradient-to-r from-brand-teal to-brand-indigo text-slate-950 font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 w-full sm:w-auto justify-center"
           >
             {status === "running" ? (
               <Activity className="w-4 h-4 mr-2 animate-pulse" />
@@ -85,10 +108,14 @@ export default function Home() {
         <div className="lg:col-span-2 space-y-6">
           <div className="glass-panel p-6">
             <div className="mb-4">
-              <h2 className="text-2xl font-semibold text-slate-100">{selectedTarget?.name}</h2>
-              <p className="text-slate-400 mt-1">{selectedTarget?.description}</p>
+              <h2 className="text-2xl font-semibold text-slate-100">
+                {status === "completed" ? activeTarget?.name : (selectedTargetId === "custom" ? `Custom Target (${customPdbId || "..."})` : targets.find(t => t.id === selectedTargetId)?.name)}
+              </h2>
+              <p className="text-slate-400 mt-1">
+                {status === "completed" ? activeTarget?.description : (selectedTargetId === "custom" ? "Enter a valid 4-character PDB ID to visualize." : targets.find(t => t.id === selectedTargetId)?.description)}
+              </p>
             </div>
-            <MolecularViewer pdbId={selectedTarget?.pdbId || null} />
+            <MolecularViewer pdbId={displayTargetId || null} />
           </div>
           
           <ResultsDashboard results={results} />
