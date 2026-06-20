@@ -50,11 +50,11 @@ export default function PipelineOrchestrator({ status }: PipelineOrchestratorPro
 
   return (
     <div className="glass-panel p-6 w-full flex flex-col space-y-6">
-      <h3 className="text-xl font-semibold text-slate-200 mb-2">AI Screening Pipeline</h3>
+      <h3 className="text-xl font-semibold text-zinc-200 mb-2">AI Screening Pipeline</h3>
       
       <div className="relative flex flex-col space-y-4">
         {/* Connecting line */}
-        <div className="absolute left-[15px] top-4 bottom-4 w-0.5 bg-slate-800 -z-10" />
+        <div className="absolute left-[15px] top-4 bottom-4 w-0.5 bg-zinc-800 -z-10" />
         
         {STEPS.map((step, index) => {
           const isActive = index === activeStep && status === "running";
@@ -68,7 +68,7 @@ export default function PipelineOrchestrator({ status }: PipelineOrchestratorPro
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    className="text-brand-teal bg-slate-950 rounded-full"
+                    className="text-brand-primary bg-zinc-950 rounded-full"
                   >
                     <CheckCircle2 className="w-8 h-8" />
                   </motion.div>
@@ -76,12 +76,12 @@ export default function PipelineOrchestrator({ status }: PipelineOrchestratorPro
                   <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                    className="text-brand-indigo bg-slate-950 rounded-full"
+                    className="text-brand-secondary bg-zinc-950 rounded-full"
                   >
                     <Loader2 className="w-8 h-8" />
                   </motion.div>
                 ) : (
-                  <div className="text-slate-600 bg-slate-950 rounded-full">
+                  <div className="text-zinc-600 bg-zinc-950 rounded-full">
                     <CircleDashed className="w-8 h-8" />
                   </div>
                 )}
@@ -89,7 +89,7 @@ export default function PipelineOrchestrator({ status }: PipelineOrchestratorPro
               
               <div className={cn(
                 "transition-colors duration-300",
-                isPast ? "text-slate-200" : isActive ? "text-brand-teal font-medium" : "text-slate-500"
+                isPast ? "text-zinc-200" : isActive ? "text-brand-primary font-medium" : "text-zinc-500"
               )}>
                 {step}
               </div>

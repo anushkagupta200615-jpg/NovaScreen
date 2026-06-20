@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-teal: #00f2fe;
-  --color-brand-indigo: #4facfe;
-  --color-slate-900: #0f172a;
-  --color-slate-800: #1e293b;
-  --color-slate-950: #020617;
+  --color-brand-primary: #f43f5e; /* Rose 500 */
+  --color-brand-secondary: #8b5cf6; /* Violet 500 */
+  --color-zinc-900: #18181b;
+  --color-zinc-800: #27272a;
+  --color-zinc-950: #09090b;
   
-  --color-glass-white: rgba(255, 255, 255, 0.05);
-  --color-glass-border: rgba(255, 255, 255, 0.1);
-  --color-glass-white-hover: rgba(255, 255, 255, 0.1);
+  --color-glass-white: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-white-hover: rgba(255, 255, 255, 0.06);
 }
 
 :root {
-  --background: #020617;
-  --foreground: #f8fafc;
+  --background: #09090b;
+  --foreground: #f4f4f5;
 }
 
 body {
@@ -36,5 +36,5 @@ body {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(to right, var(--color-brand-teal), var(--color-brand-indigo));
+  background-image: linear-gradient(to right, var(--color-brand-primary), var(--color-brand-secondary));
 }

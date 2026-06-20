@@ -16,7 +16,7 @@ interface ResultsDashboardProps {
 export default function ResultsDashboard({ results }: ResultsDashboardProps) {
   if (!results || results.length === 0) {
     return (
-      <div className="glass-panel p-6 w-full h-full min-h-[300px] flex flex-col items-center justify-center text-slate-400">
+      <div className="glass-panel p-6 w-full h-full min-h-[300px] flex flex-col items-center justify-center text-zinc-400">
         <FlaskConical className="w-12 h-12 mb-4 opacity-50" />
         <p>No results yet. Run the screening pipeline.</p>
       </div>
@@ -29,11 +29,11 @@ export default function ResultsDashboard({ results }: ResultsDashboardProps) {
       animate={{ opacity: 1, y: 0 }}
       className="glass-panel p-6 w-full flex flex-col space-y-6"
     >
-      <h3 className="text-xl font-semibold text-slate-200">Screening Results</h3>
+      <h3 className="text-xl font-semibold text-zinc-200">Screening Results</h3>
       
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
-          <thead className="text-slate-400 border-b border-slate-700/50">
+          <thead className="text-zinc-400 border-b border-zinc-700/50">
             <tr>
               <th className="pb-3 font-medium">Compound</th>
               <th className="pb-3 font-medium text-right">Affinity Score</th>
@@ -41,18 +41,18 @@ export default function ResultsDashboard({ results }: ResultsDashboardProps) {
               <th className="pb-3 font-medium text-center">Lipinski Pass</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/50">
+          <tbody className="divide-y divide-zinc-800/50">
             {results.map((result, idx) => (
               <motion.tr 
                 key={`${result.compoundId}-${idx}`}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="hover:bg-slate-800/30 transition-colors"
+                className="hover:bg-zinc-800/30 transition-colors"
               >
-                <td className="py-4 font-medium text-slate-200">
+                <td className="py-4 font-medium text-zinc-200">
                   {result.compound?.name || result.compoundId}
-                  <div className="text-xs text-slate-500 font-mono mt-1">
+                  <div className="text-xs text-zinc-500 font-mono mt-1">
                     {result.compound?.smiles?.substring(0, 15)}...
                   </div>
                 </td>
@@ -75,7 +75,7 @@ export default function ResultsDashboard({ results }: ResultsDashboardProps) {
                   )}
                 </td>
                 <td className="py-4 text-center">
-                  <span className={`inline-block w-3 h-3 rounded-full ${result.lipinskiPass ? "bg-brand-teal" : "bg-red-500"}`} />
+                  <span className={`inline-block w-3 h-3 rounded-full ${result.lipinskiPass ? "bg-brand-primary" : "bg-red-500"}`} />
                 </td>
               </motion.tr>
             ))}
