@@ -58,7 +58,11 @@ export default function Home() {
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-primary/10 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-brand-secondary/10 blur-[120px] pointer-events-none" />
 
-      <WelcomeModal />
+      <WelcomeModal 
+        selectedTargetId={selectedTargetId} 
+        onSelectTarget={setSelectedTargetId} 
+        onRun={handleRunScreening}
+      />
       
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-xl">
