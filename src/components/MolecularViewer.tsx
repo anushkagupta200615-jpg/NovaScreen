@@ -63,7 +63,7 @@ export default function MolecularViewer({ pdbId }: MolecularViewerProps) {
   }, [pdbId]);
 
   return (
-    <div className="relative w-full h-[400px] glass-panel flex items-center justify-center overflow-hidden">
+    <div className="relative w-full h-[550px] glass-panel flex items-center justify-center overflow-hidden">
       {!pdbId && !loading && (
         <div className="text-zinc-400 flex flex-col items-center">
           <p>Select a target to view molecular structure</p>
