@@ -13,8 +13,8 @@ export async function POST(req: NextRequest) {
     // Simulate backend processing time
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    let target;
-    let results;
+    let target: any;
+    let results: any[];
 
     if (targetId === "custom") {
       if (!customPdbId) {
