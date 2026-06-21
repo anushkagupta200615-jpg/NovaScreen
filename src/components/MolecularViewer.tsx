@@ -44,7 +44,7 @@ export default function MolecularViewer({ pdbId }: MolecularViewerProps) {
         viewer.setStyle({}, { cartoon: { color: "spectrum" } }); // colorful cartoon representation
         viewer.zoomTo();
         viewer.render();
-        viewer.spin("y", 1); // Auto-spin the molecule
+        // viewer.spin("y", 1); // Disabled auto-spin to improve performance on laptops
       } catch (err: any) {
         console.error("3Dmol Error:", err);
         setError("Failed to load molecular structure.");
