@@ -12,10 +12,10 @@ function cn(...inputs: ClassValue[]) {
 
 const STEPS = [
   "Target Analyst",
-  "Simulation Engine",
-  "Affinity Scorer",
-  "Safety & Toxicity",
-  "Insights Reporter",
+  "Molecular Dynamics",
+  "Binding Scorer",
+  "Toxicity Screener",
+  "Discovery Reporter",
 ];
 
 interface PipelineOrchestratorProps {
